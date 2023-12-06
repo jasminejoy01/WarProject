@@ -17,8 +17,10 @@ def split_alternatively(arr):
     for i, element in enumerate(arr):
         if i % 2 == 0:
             array1.append(element)
+            #array1 = array1[::-1]
         else:
             array2.append(element)
+            #array2 = array2[::-1]
     return array1, array2
 
 def replace_value(lst, old_value, new_value):
@@ -74,6 +76,7 @@ def pull_cards(set1, set2, new_array):
 ### ----------------------------------------------------------------------------------------
 ### INITIALIZE
 ### ----------------------------------------------------------------------------------------
+t20 = t20[::-1]
 sets = (split_alternatively(replace_value(t20, 1, 14)))
-pull_cards(sets[0], sets[1], [])
+result = (pull_cards(sets[0], sets[1], []) == r20)
 
