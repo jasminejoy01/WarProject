@@ -25,11 +25,8 @@ def replace_value(lst, old_value, new_value):
     return [new_value if x == old_value else x for x in lst]
 
 def pull_cards(set1, set2, new_array):
-    #print(replace_value(set1, 14, 1), replace_value(set2, 14, 2))
-    #print(len(set1), len(set2), len(set1) + len(set2))
-    
-    if set1 != [] and set2 != []:
-        print(set1[0], set2[0])
+    print(replace_value(set1, 14, 1), replace_value(set2, 14, 2))
+    print(len(set1), len(set2), len(set1) + len(set2))
     print("---------")
     
     if len(set1) == 0 or len(set2) == 0:
@@ -45,7 +42,7 @@ def pull_cards(set1, set2, new_array):
     elif len(set1) > 3 and len(set2) > 3:
         card_up_1 = set1[0]
         card_up_2 = set2[0]
-        new_array = new_array + sorted([card_up_1, card_up_2], reverse = True)
+        new_array = sorted(new_array + [card_up_1, card_up_2], reverse = True)
         
         if card_up_1 < card_up_2:
             set1 = set1[1:]
@@ -58,34 +55,39 @@ def pull_cards(set1, set2, new_array):
             pull_cards(set1, set2, [])
             
         else:
+            new_array = sorted(new_array + [set1[1], set2[1]], reverse = True)
             set1 = set1[2:]
             set2 = set2[2:]
-            new_array = new_array + sorted(new_array, reverse = True)
             pull_cards(set1, set2, new_array)
     else:
-        print("here now")
+        #print("here now")
         card_up_1 = set1[0]
         card_up_2 = set2[0]
-        new_array = new_array + [card_up_2, card_up_1]
+        new_array = sorted(new_array + [card_up_2, card_up_1], reverse = True)
         
         if card_up_1 < card_up_2:
             set1 = set1[1:]
-            set2 = set2[1:] + sorted(new_array, reverse = True)
+            set2 = set2[1:] + new_array
             pull_cards(set1, set2, [])
             
         elif card_up_1 > card_up_2:
-            set1 = set1[1:] + sorted(new_array, reverse = True)
+            set1 = set1[1:] + new_array
             set2 = set2[1:] 
             pull_cards(set1, set2, [])
-            
         else:
-            #print(set1, set2)
-            new_array = new_array + [set1[1], set2[1]]
-            new_array = sorted(new_array, reverse = True)
-            set1 = set1[2:]
-            set2 = set2[2:]
-            #print("###")
-            pull_cards(set1, set2, new_array)
+            if len(set1) < 2 or len(set2) < 2:
+                if len(set1) > len(set2):
+                    set1.pop(0)
+                    set1.extend([card_up_1, card_up_2])
+                    set2.pop(0)
+                    pull_cards(set1, set2, [])
+            else:
+
+                new_array = sorted(new_array + [set1[1], set2[1]], reverse = True)
+                set1 = set1[2:]
+                set2 = set2[2:]
+                pull_cards(set1, set2, new_array)
+
  
 ### ----------------------------------------------------------------------------------------
 ### INITIALIZE
